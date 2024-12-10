@@ -1,0 +1,88 @@
+HELP.md
+target/
+/build/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# File cài đặt của Maven/Gradle
+/.mvn/
+/.gradle/
+/pom.xml.tag
+/pom.xml.releaseBackup
+/pom.xml.versionsBackup
+/pom.xml.next
+/dependency-reduced-pom.xml
+/build.log
+
+# Log file
+*.log
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### Eclipse ###
+.settings/
+*.launch
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+nbactions.xml
+nb-configuration.xml
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# Hệ điều hành
+.DS_Store        # macOS
+Thumbs.db        # Windows
+*.swp            # Tệp tạm thời của vi/vim
+*.swo
+
+# File test coverage (JaCoCo)
+*.exec
+
+# File tạm thời của ứng dụng
+*.tmp
+*.bak
+*.orig
+*.old
+
+# File môi trường
+.env
+.env.*
+
+# Các file binary
+*.class
+*.jar
+*.war
+*.ear
+
+# Thư viện phụ thuộc (nếu không dùng trình quản lý phụ thuộc như Maven hoặc Gradle)
+lib/
+
+# Docker
+/.dockerignore
+/docker-compose.override.yml
+
+# Tệp cấu hình CI/CD (nếu tự tạo)
+.ci/
