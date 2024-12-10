@@ -1,4 +1,4 @@
-# 💎 [Kiểm Tra cách sài git]
+# 💎 [Hutech event]
 
 <div align="center">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3uZ84rTBErL7iqEfS9dfxBdlGWWMffTH-KA&s" alt="Project Banner" width="100%"/>
@@ -18,9 +18,8 @@
 
 | 🚀 Tính Năng | 🔍 Chi Tiết    | 💡 Lợi Ích     |
 | ------------ | -------------- | -------------- |
-| Tính Năng 1  | Mô tả chi tiết | Lợi ích cụ thể |
-| Tính Năng 2  | Mô tả chi tiết | Lợi ích cụ thể |
-| Tính Năng 3  | Mô tả chi tiết | Lợi ích cụ thể |
+| Tính Năng 1  |                |                |
+
 
 ## 🛠 Công Nghệ & Công Cụ
 
@@ -107,7 +106,7 @@ mvn spring-boot:run
 
 ## 📧 Liên Hệ
 
-**Email**: contact@project.com
+**Email**: tuonghutnh@gmail.com
 
 ---
 
