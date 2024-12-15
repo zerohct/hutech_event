@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -49,6 +51,14 @@ public class User {
     private LocalDateTime createdAt;
 
     private LocalDateTime lastLogin;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "UserRoles",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId")
+    )
+    private Set<Role> roles = new HashSet<>();
 
 }
 
