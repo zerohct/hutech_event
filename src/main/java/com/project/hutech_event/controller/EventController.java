@@ -18,7 +18,6 @@ public class EventController {
     @Autowired
     private  EventService eventService;
 
-
     @PostMapping()
     public ResponseEntity<?> createEvent(@RequestBody EventRequest request,@RequestHeader(value = "Authorization", required = false) String authHeader) {
         // Kiểm tra xem authHeader có tồn tại hay không
