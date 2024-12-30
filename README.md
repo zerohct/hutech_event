@@ -1,4 +1,4 @@
-# 💎 [Kiểm Tra cách sài git]
+# 💎 [Hutech event website]
 
 <div align="center">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3uZ84rTBErL7iqEfS9dfxBdlGWWMffTH-KA&s" alt="Project Banner" width="100%"/>
@@ -16,11 +16,11 @@
 
 ## 📊 Tính Năng Chính
 
-| 🚀 Tính Năng | 🔍 Chi Tiết    | 💡 Lợi Ích     |
-| ------------ | -------------- | -------------- |
-| Tính Năng 1  | Mô tả chi tiết | Lợi ích cụ thể |
-| Tính Năng 2  | Mô tả chi tiết | Lợi ích cụ thể |
-| Tính Năng 3  | Mô tả chi tiết | Lợi ích cụ thể |
+| 🚀 Tính Năng      | 🔍 Chi Tiết             | 💡 Lợi Ích                     |
+| ----------------- | ---------------------- | ----------------------------- |
+| Tổ chức sự kiện   | Quản lý các sự kiện    | Tiết kiệm thời gian và công sức |
+| Đăng ký tham gia  | Giao diện trực quan    | Tiện lợi cho người dùng       |
+| Thống kê dữ liệu  | Báo cáo chi tiết       | Hỗ trợ phân tích hiệu quả     |
 
 ## 🛠 Công Nghệ & Công Cụ
 
@@ -30,7 +30,7 @@
 
 ### 🔧 Chi Tiết Công Nghệ
 
-<!-- - **Frontend**: React, Next.js, Tailwind CSS -->
+<!-- - **Frontend**: React js, Tailwind CSS -->
 
 - **Backend**: Spring Boot (REST API).
 - **Database**: MySQL
@@ -71,6 +71,9 @@ mvn spring-boot:run
 │   ├── 📂 main/
 │   │   ├── 📂 java/com/example/project/
 │   │   │   ├── 📂 controller/    # Các lớp Controller (API endpoint)
+│   │   │   ├── 📂 config/        # Cấu hình ứng dụng
+│   │   │   ├── 📂 dto/           # Các lớp DTO (Data Transfer Object)
+│   │   │   ├── 📂 enums/         # Các lớp Enum
 │   │   │   ├── 📂 service/       # Các lớp Service (logic nghiệp vụ)
 │   │   │   ├── 📂 repository/    # Các lớp Repository (tương tác cơ sở dữ liệu)
 │   │   │   ├── 📂 model/         # Các lớp Entity (các đối tượng dữ liệu)
@@ -82,6 +85,7 @@ mvn spring-boot:run
 ├── 📂 target/                      # Thư mục chứa file build (do Maven tạo ra)
 ├── 📄 pom.xml                      # File cấu hình Maven
 └── 📄 README.md                    # Hướng dẫn dự án
+
 
 ```
 
@@ -107,7 +111,7 @@ mvn spring-boot:run
 
 ## 📧 Liên Hệ
 
-**Email**: contact@project.com
+**Email**: tuonghutnh@gmail.com
 
 ---
 
