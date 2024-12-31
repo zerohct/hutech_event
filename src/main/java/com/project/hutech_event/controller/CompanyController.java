@@ -22,7 +22,7 @@ public class CompanyController {
 
     // Tạo mới Company
     @PostMapping
-    public ResponseEntity<CompanyResponse> createCompany(@RequestBody @Valid CompanyRequest requestDTO) {
+    public ResponseEntity<CompanyResponse> createCompany(@ModelAttribute @Valid CompanyRequest requestDTO) {
         CompanyResponse response = companyService.createCompany(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -45,7 +45,7 @@ public class CompanyController {
     @PutMapping("/{companyId}")
     public ResponseEntity<CompanyResponse> updateCompany(
             @PathVariable Long companyId,
-            @RequestBody @Valid CompanyRequest requestDTO) {
+            @ModelAttribute @Valid CompanyRequest requestDTO) {
         CompanyResponse response = companyService.updateCompany(companyId, requestDTO);
         return ResponseEntity.ok(response);
     }
