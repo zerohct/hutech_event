@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "Users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -43,6 +45,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String avatarUrl;
 
     @Column(nullable = false, updatable = false)
@@ -58,6 +61,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private Set<Role> roles = new HashSet<>();
+
 }
 
 

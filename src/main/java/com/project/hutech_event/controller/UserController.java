@@ -24,7 +24,7 @@ public class UserController {
 
     // Tạo mới User
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest requestDTO) {
+    public ResponseEntity<UserResponse> createUser(@ModelAttribute @Valid UserRequest requestDTO) {
         UserResponse response = userService.createUser(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -47,7 +47,7 @@ public class UserController {
     @PutMapping("/{userId}")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long userId,
-            @RequestBody @Valid UserRequest requestDTO) {
+            @ModelAttribute @Valid UserRequest requestDTO) {
         UserResponse response = userService.updateUser(userId, requestDTO);
         return ResponseEntity.ok(response);
     }

@@ -2,6 +2,8 @@ package com.project.hutech_event.dto.request;
 
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -16,4 +18,5 @@ public class EventRequest {
     private LocalDateTime registrationDeadline;
     private String location;
     private Integer maxParticipants;
+    private MultipartFile image;
 }

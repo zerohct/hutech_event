@@ -14,8 +14,10 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -133,6 +135,8 @@ public class UserService {
     public UserResponse updateUser(Long userId, UserRequest requestDTO) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
+
+
         mapToEntity(requestDTO, user);
         User updatedUser = userRepository.save(user);
         return mapToDTO(updatedUser);
@@ -148,6 +152,20 @@ public class UserService {
 
     // Map DTO -> Entity
     private void mapToEntity(UserRequest requestDTO, User user) {
+        MultipartFile imageFile = requestDTO.getAvatarUrl();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                if (imageFile.getSize() > 5 * 1024 * 1024) { // 5MB limit
+                    throw new RuntimeException("File size exceeds 5MB limit.");
+                }
+                byte[] imageBytes = imageFile.getBytes();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                user.setAvatarUrl(base64Image); // Cập nhật Base64 image nếu có thay đổi
+            } catch (Exception e) {
+                throw new RuntimeException("Error processing image file", e);
+            }
+        }
+
         user.setUsername(requestDTO.getUsername());
         user.setEmail(requestDTO.getEmail());
         user.setFullName(requestDTO.getFullName());
@@ -157,7 +175,6 @@ public class UserService {
         user.setPhoneNumber(requestDTO.getPhoneNumber());
         user.setDateOfBirth(requestDTO.getDateOfBirth());
         user.setGender(requestDTO.getGender());
-        user.setAvatarUrl(requestDTO.getAvatarUrl());
     }
 
     // Map Entity -> DTO
