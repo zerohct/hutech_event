@@ -22,12 +22,12 @@ public class JwtUtils {
     private TokenBlackList tokenBlackList;
 
     public String generateJwtToken(User user) {
-
-        // Thêm thông tin roles vào claims
+        // Thêm thông tin roles và userId vào claims
         Map<String, Object> claims = new HashMap<>();
         claims.put("roles", user.getRoles().stream()
                 .map(Role::getName) // Chỉ lưu tên vai trò
-                .collect(Collectors.toList()));// Giả sử User có phương thức getRoles() trả về danh sách vai trò
+                .collect(Collectors.toList()));
+        claims.put("userId", user.getUserId()); // Thêm userId vào claims
 
         return Jwts.builder()
                 .setClaims(claims) // Đặt claims
@@ -37,6 +37,7 @@ public class JwtUtils {
                 .signWith(SignatureAlgorithm.HS512, jwtSecret.getBytes()) // Ký token
                 .compact(); // Tạo token
     }
+
 
     public String getUsernameFromJwtToken(String token) {
         return Jwts.parser().setSigningKey(jwtSecret.getBytes()).parseClaimsJws(token).getBody().getSubject();
@@ -65,6 +66,15 @@ public class JwtUtils {
                 .getBody();
 
         return (List<String>) claims.get("roles");
+    }
+
+    public Long getUserIdFromJwtToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret.getBytes())
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.get("userId", Long.class); // Lấy userId từ claims
     }
 
 }

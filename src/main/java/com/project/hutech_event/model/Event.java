@@ -2,11 +2,14 @@ package com.project.hutech_event.model;
 
 import com.project.hutech_event.enums.EventStatus;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -55,6 +58,9 @@ public class Event {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+    private List<EventRegistration> registrations;
 }
 
 

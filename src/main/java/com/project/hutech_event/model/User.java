@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "Users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -59,6 +61,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private Set<Role> roles = new HashSet<>();
+
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<EventRegistration> registrations;
 
 }
 
