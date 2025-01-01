@@ -22,4 +22,5 @@ public class EventResponse {
     private Integer currentParticipants;
     private EventStatus status;
     private String createdBy;
+    private String image;
 }

@@ -46,6 +46,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(columnDefinition = "LONGTEXT")
     private String avatarUrl;
 
     @Column(nullable = false, updatable = false)
@@ -65,6 +66,8 @@ public class User {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<EventRegistration> registrations;
+
+
 
 }
 
