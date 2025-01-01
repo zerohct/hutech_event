@@ -23,22 +23,21 @@ public class User {
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(unique = true, length = 100)  // Removed nullable = false
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)  // Removed nullable = false
     private String fullName;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(unique = true, length = 20)  // Removed nullable = false
     private String studentCode;
 
     private String faculty;
     private String clazz;
     private String phoneNumber;
-
     private LocalDate dateOfBirth;
 
     @Enumerated(EnumType.STRING)
@@ -59,7 +58,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private Set<Role> roles = new HashSet<>();
-
 }
 
 

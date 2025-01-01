@@ -33,50 +33,67 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+
     public RegisterResponse registerUser(RegisterRequest request) {
-        // Kiểm tra username hoặc email đã tồn tại
-        if (userRepository.existsByUsername(request.getUsername())) {
-            return  RegisterResponse.builder().message("Username đã tồn tại!")
+        try {
+            // Kiểm tra username có tồn tại
+            if (userRepository.existsByEmail(request.getUsername()) ||
+                    userRepository.existsByStudentCode(request.getUsername())) {
+                return RegisterResponse.builder()
+                        .message("Username đã tồn tại!")
+                        .username(request.getUsername())
+                        .email(null)  // Thêm email vào response
+                        .build();
+            }
+
+            // Lấy vai trò USER
+            Optional<Role> userRole = roleRepository.findByName("USER");
+            if (userRole.isEmpty()) {
+                return RegisterResponse.builder()
+                        .message("Lỗi hệ thống: Role USER không tồn tại!")
+                        .username(request.getUsername())
+                        .email(null)  // Thêm email vào response
+                        .build();
+            }
+
+            User user = new User();
+            user.setUsername(request.getUsername());
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+            // Xử lý email và student code
+            String username = request.getUsername();
+            if (username.contains("@")) {
+                user.setEmail(username);  // Lưu email
+            } else {
+                user.setStudentCode(username);
+                user.setEmail(username + "@temp.hutech.edu.vn");  // Email tạm thời cho student code
+            }
+
+            // Thiết lập role
+            user.setRoles(new HashSet<>());
+            user.getRoles().add(userRole.get());
+
+            // Lưu user và lấy thông tin user đã được lưu
+            User savedUser = userRepository.save(user);
+
+            // Trả về response với đầy đủ thông tin
+            return RegisterResponse.builder()
+                    .message("Đăng ký thành công!")
+                    .username(savedUser.getUsername())
+                    .email(user.getEmail())
+                    .build();
+
+        } catch (Exception e) {
+            return RegisterResponse.builder()
+                    .message("Đăng ký thất bại: " + e.getMessage())
                     .username(request.getUsername())
-                    .email(request.getEmail())
+                    .email(null)
                     .build();
         }
-        if (userRepository.existsByEmail(request.getEmail())) {
-            return  RegisterResponse.builder().message("Email đã tồn tại!!!")
-                    .username(request.getUsername())
-                    .email(request.getEmail())
-                    .build();
-        }
-
-        // Lấy vai trò USER từ cơ sở dữ liệu
-        Optional<Role> userRole = roleRepository.findByName("USER");
-        if (userRole.isEmpty()) {
-            throw new RuntimeException("Role USER không tồn tại trong cơ sở dữ liệu!");
-        }
-
-        // Tạo đối tượng User
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFullName(request.getFullName());
-        user.setStudentCode(request.getStudentCode());
-        user.setFaculty(request.getFaculty());
-        user.setClazz(request.getClazz());
-        user.setPhoneNumber(request.getPhoneNumber());
-        user.setDateOfBirth(LocalDate.parse(request.getDateOfBirth())); // Chuyển chuỗi thành LocalDate
-        user.setGender(mapGender(request.getGender())); // Chuyển chuỗi thành enum
-        user.setRoles(new HashSet<>());
-        user.getRoles().add(userRole.get()); // Gán vai trò USER
-
-        // Lưu người dùng vào cơ sở dữ liệu
-        userRepository.save(user);
-
-        return  RegisterResponse.builder().message("Đăng ký thành công!!!")
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .build();
     }
+
+
 
     // Tạo mới User
     public UserResponse createUser(UserRequest requestDTO) {

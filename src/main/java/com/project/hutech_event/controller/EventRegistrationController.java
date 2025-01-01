@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/event_registry")
+@RequestMapping("/api/event_registry")
 public class EventRegistrationController {
     @Autowired
     private EventRegistrationService eventRegistrationService;
