@@ -19,7 +19,7 @@ public class EventController {
     private  EventService eventService;
 
     @PostMapping()
-    public ResponseEntity<?> createEvent(@RequestBody EventRequest request,@RequestHeader(value = "Authorization", required = false) String authHeader) {
+    public ResponseEntity<?> createEvent(@ModelAttribute EventRequest request,@RequestHeader(value = "Authorization", required = false) String authHeader) {
         // Kiểm tra xem authHeader có tồn tại hay không
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
@@ -44,9 +44,12 @@ public class EventController {
         return ResponseEntity.ok(eventService.getEventById(eventId));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
     @PutMapping("/{eventId}")
-    public ResponseEntity<EventResponse> updateEvent(@PathVariable Long eventId, @RequestBody EventRequest request) {
+    public ResponseEntity<EventResponse> updateEvent(@PathVariable Long eventId, @ModelAttribute EventRequest request) {
+        if (eventId == null) {
+            throw new IllegalArgumentException("Event ID không được null");
+        }
         return ResponseEntity.ok(eventService.updateEvent(eventId, request));
     }
 
@@ -56,5 +59,6 @@ public class EventController {
         eventService.deleteEvent(eventId);
         return ResponseEntity.noContent().build();
     }
+
 
 }

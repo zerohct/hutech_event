@@ -11,7 +11,9 @@ import com.project.hutech_event.repository.EventTypeRepository;
 import com.project.hutech_event.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ public class EventService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    public EventResponse createEvent(EventRequest request,String token) {
+    public EventResponse createEvent(EventRequest request, String token) {
 
         String username = jwtUtils.getUsernameFromJwtToken(token);
 
@@ -52,11 +54,27 @@ public class EventService {
         event.setCurrentParticipants(0);
         event.setCreatedBy(createdBy);
 
+
+        MultipartFile imageFile = request.getImage();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                // Chuyển đổi file ảnh sang chuỗi Base64
+                byte[] imageBytes = imageFile.getBytes();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                // Gán Base64 vào thuộc tính image
+                event.setImage(base64Image);
+            } catch (Exception e) {
+                throw new RuntimeException("Error processing image file", e);
+            }
+        }
+
         // Lưu vào database
         Event savedEvent = eventRepository.save(event);
 
         return mapToResponse(savedEvent);
     }
+
 
     public List<EventResponse> getAllEvents() {
         return eventRepository.findAll().stream()
@@ -87,6 +105,20 @@ public class EventService {
         event.setLocation(request.getLocation());
         event.setMaxParticipants(request.getMaxParticipants());
 
+        MultipartFile imageFile = request.getImage();
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                if (imageFile.getSize() > 5 * 1024 * 1024) { // 5MB limit
+                    throw new RuntimeException("File size exceeds 5MB limit.");
+                }
+                byte[] imageBytes = imageFile.getBytes();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                event.setImage(base64Image); // Cập nhật Base64 image nếu có thay đổi
+            } catch (Exception e) {
+                throw new RuntimeException("Error processing image file", e);
+            }
+        }
+
         Event updatedEvent = eventRepository.save(event);
         return mapToResponse(updatedEvent);
     }
@@ -111,7 +143,8 @@ public class EventService {
                 event.getMaxParticipants(),
                 event.getCurrentParticipants(),
                 event.getStatus(),
-                event.getCreatedBy().getUsername()
+                event.getCreatedBy().getUsername(),
+                event.getImage()
         );
     }
 

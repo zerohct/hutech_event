@@ -2,6 +2,7 @@ package com.project.hutech_event.dto.request;
 
 import com.project.hutech_event.enums.Gender;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -19,5 +20,5 @@ public class UserRequest {
     private String phoneNumber;
     private LocalDate dateOfBirth;
     private Gender gender;
-    private String avatarUrl;
+    private MultipartFile avatarUrl;
 }
